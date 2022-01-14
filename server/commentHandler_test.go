@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
+	"github.com/olusolaa/movieApi/cache"
 	"github.com/olusolaa/movieApi/db"
 	"github.com/olusolaa/movieApi/models"
 	"net/http"
@@ -18,6 +19,15 @@ func TestServer_AddComment(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	ctrl := gomock.NewController(t)
 	mockedDb := db.NewMockDB(ctrl)
+	var moviesCache = cache.NewRedisCache("localhost:6379", 0, "", 10)
+
+	router := gin.Default()
+
+	s := &Server{
+		DB:    mockedDb,
+		Cache: moviesCache,
+	}
+	s.defineRoutes(router)
 
 	t.Run("Success", func(t *testing.T) {
 		// create mockCommentResponse
@@ -31,14 +41,6 @@ func TestServer_AddComment(t *testing.T) {
 		mockedDb.EXPECT().AddComment(gomock.Any()).Times(1).Return(mockCommentResponse, nil)
 
 		// a response recorder for getting written http response
-		rr := httptest.NewRecorder()
-
-		router := gin.Default()
-
-		s := &Server{
-			DB: mockedDb,
-		}
-		s.defineRoutes(router)
 
 		requestBody := []byte(`{"user_ip":"1234","content":"test comment"}`)
 		request, err := http.NewRequest(http.MethodPost, "/api/v1/movies/1/comments", bytes.NewBuffer(requestBody))
@@ -47,6 +49,7 @@ func TestServer_AddComment(t *testing.T) {
 		}
 		request.Header.Set("Content-Type", "application/json")
 
+		rr := httptest.NewRecorder()
 		router.ServeHTTP(rr, request)
 
 		respBody, err := json.Marshal(gin.H{
