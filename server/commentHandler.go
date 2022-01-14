@@ -52,6 +52,30 @@ func (s *Server) AddComment() gin.HandlerFunc {
 	}
 }
 
+// @Summary Get comments
+// @Description Get all comments for a movie by movie id
+// @Produce  json
+// @Param movie_id path int true "Movie ID"
+// @Success 200 {object} models.Comment
+// @Failure 400 {object} models.Response
+// @Router /api/v1/movies/{movie_id}/comments [get]
+// GetComments returns all comments of a movie
+func (s *Server) GetComments() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		movieId, err := strconv.Atoi(c.Param("movie_id"))
+		data, err := s.DB.GetComments(movieId)
+		if err != nil {
+			log.Println(err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		for i := 0; i < len(*data)/2; i++ {
+			(*data)[i], (*data)[len(*data)-1-i] = (*data)[len(*data)-1-i], (*data)[i]
+		}
+		c.JSON(http.StatusOK, gin.H{"message": "Comments fetched successfully!", "data": data})
+	}
+}
+
 // increaseCommentCountInRedis increases the comment count of corresponding movie in redis
 func (s *Server) increaseCommentCountInRedis(movieID int) bool {
 	var movies = s.Cache.Get("movies")
@@ -75,23 +99,17 @@ func (s *Server) increaseCommentCountInRedis(movieID int) bool {
 	return false
 }
 
-// @Summary Get comments
-// @Description Get all comments for a movie by movie id
-// @Produce  json
-// @Param movie_id path int true "Movie ID"
-// @Success 200 {object} models.Comment
-// @Failure 400 {object} models.Response
-// @Router /api/v1/movies/{movie_id}/comments [get]
-// GetComments returns all comments of a movie
-func (s *Server) GetComments() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		movieId, err := strconv.Atoi(c.Param("movie_id"))
-		data, err := s.DB.GetComments(movieId)
-		if err != nil {
-			log.Println(err)
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
+// addCommentCountToMovies add the comment count for uncached movies.
+func (s *Server) addCommentCountToMovies(movies *[]models.Movie) {
+	for idx, movie := range *movies {
+		count, _ := s.DB.CountComments(movie.EpisodeId)
+		temp := models.Movie{
+			EpisodeId:    movie.EpisodeId,
+			Title:        movie.Title,
+			CommentCount: count,
+			OpeningCrawl: movie.OpeningCrawl,
+			ReleaseDate:  movie.ReleaseDate,
 		}
-		c.JSON(http.StatusOK, gin.H{"message": "Comments fetched successfully!", "data": data})
+		(*movies)[idx] = temp
 	}
 }
