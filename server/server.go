@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/olusolaa/movieApi/cache"
 	"github.com/olusolaa/movieApi/db"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -18,7 +19,8 @@ import (
 
 // Server serves requests to DB with router
 type Server struct {
-	DB db.DB
+	DB    db.DB
+	Cache cache.Cache
 }
 
 func (s *Server) defineRoutes(router *gin.Engine) {
