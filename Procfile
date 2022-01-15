@@ -1,1 +1,1 @@
-web: bin/movieApi
+web: movieApi
