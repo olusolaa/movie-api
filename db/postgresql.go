@@ -31,12 +31,12 @@ func (psql *PostgresDB) Init() {
 	}
 	DBSession, err := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{})
 	if err != nil {
-		panic(any(errors.Wrap(err, "Unable to connect to Postgresql database")))
+		panic(errors.Wrap(err, "Unable to connect to Postgresql database"))
 	}
 	psql.DB = DBSession
 	err = psql.DB.AutoMigrate(&models.Comment{})
 	if err != nil {
-		panic(any(errors.Wrap(err, "Unable to migrate Postgresql database")))
+		panic(errors.Wrap(err, "Unable to migrate Postgresql database"))
 	}
 }
 

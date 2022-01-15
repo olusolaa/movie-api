@@ -41,11 +41,11 @@ func (cache *redisCache) Set(key string, value *[]models.Movie) {
 	client := cache.getClient()
 	marshal, err := json.Marshal(value)
 	if err != nil {
-		panic(any(err))
+		panic(err)
 	}
 	err = client.Set(ctx, key, string(marshal), cache.expires*time.Second).Err()
 	if err != nil {
-		panic(any(err))
+		panic(err)
 	}
 	return
 }
@@ -59,7 +59,7 @@ func (cache *redisCache) Get(key string) *[]models.Movie {
 	var movies []models.Movie
 	err = json.Unmarshal([]byte(val), &movies)
 	if err != nil {
-		panic(any(err))
+		panic(err)
 	}
 	log.Println("Movies retrieved from cache")
 	return &movies

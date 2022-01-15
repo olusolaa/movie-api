@@ -1,7 +1,7 @@
 module github.com/olusolaa/movieApi
 
-// +heroku goVersion go1.18
-go 1.18
+// +heroku goVersion go1.17
+go 1.17
 
 require (
 	github.com/gin-contrib/cors v1.3.1
