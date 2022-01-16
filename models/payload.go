@@ -5,25 +5,6 @@ type CommentRequest struct {
 	Content   string `json:"content"`
 }
 
-type CommentResponse struct {
-	Status  string    `json:"status"`
-	Message string    `json:"message"`
-	Data    []Comment `json:"response"`
-}
-
-type MovieResponse struct {
-	Status  string  `json:"status"`
-	Message string  `json:"message"`
-	Data    []Movie `json:"response"`
-}
-
-type CharacterResponse struct {
-	Status  string      `json:"status"`
-	Message string      `json:"message"`
-	Data    []Character `json:"response"`
-}
-
 type ApiError struct {
-	Status string `json:"status"`
-	Data   string `json:"message"`
+	Message string `json:"message"`
 }
