@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/olusolaa/movieApi/models"
 	"github.com/olusolaa/movieApi/swapi"
 	"log"
 	"net/http"
@@ -34,5 +35,20 @@ func (s *Server) GetMovies() gin.HandlerFunc {
 			log.Println("Movies added to cache")
 		}
 		c.JSON(http.StatusOK, movies)
+	}
+}
+
+// addCommentCountToMovies add the comment count for uncached movies.
+func (s *Server) addCommentCountToMovies(movies *[]models.Movie) {
+	for idx, movie := range *movies {
+		count, _ := s.DB.CountComments(movie.EpisodeId)
+		temp := models.Movie{
+			EpisodeId:    movie.EpisodeId,
+			Title:        movie.Title,
+			CommentCount: count,
+			OpeningCrawl: movie.OpeningCrawl,
+			ReleaseDate:  movie.ReleaseDate,
+		}
+		(*movies)[idx] = temp
 	}
 }

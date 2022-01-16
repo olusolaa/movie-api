@@ -28,7 +28,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./db:/docker-entrypoint-initdb.d/
+      - ./newdb:/docker-entrypoint-initdb.d/
 
   pgadmin-compose:
         image: dpage/pgadmin4

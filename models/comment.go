@@ -9,6 +9,6 @@ type Comment struct {
 	ID        uint      `gorm:"primaryKey;autoIncrement;"`
 	MovieId   int       `json:"movie_id" pg:"movie_id"`
 	IP        string    `json:"ip" pg:"ip"`
-	Content   string    `json:"content" pg:"content" valid:"required,stringlength(2|500)~content: must be of appropriate length"`
+	Content   string    `json:"content" pg:"content"`
 	CreatedAt time.Time `json:"created_at" pg:"created_at"`
 }
