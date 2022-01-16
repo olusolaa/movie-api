@@ -63,19 +63,19 @@
                     },
                     {
                         "type": "string",
-                        "description": "Sort by field",
+                        "description": "Sort by height or name or geneder",
                         "name": "sort_by",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Order",
+                        "description": "ascending or descending order",
                         "name": "order",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Filter by field",
+                        "description": "Filter by male or female or n/a or hermaphrodite",
                         "name": "filter_by",
                         "in": "query"
                     }
