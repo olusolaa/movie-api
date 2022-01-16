@@ -3,9 +3,11 @@ package cache
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/olusolaa/movieApi/models"
 	"log"
+	"os"
 	"time"
 )
 
@@ -28,14 +30,29 @@ func NewRedisCache(host string, db int, pword string, exp time.Duration) Cache {
 }
 
 func (cache *redisCache) getClient() *redis.Client {
-	return redis.NewClient(&redis.Options{
-		Addr:     cache.host,
-		DB:       cache.db,
-		Password: cache.pword,
-	})
-}
+	var opts *redis.Options
+	if os.Getenv("LOCAL") == "true" {
+		redisAddress := fmt.Sprintf("%s:6379", os.Getenv("REDIS_URL"))
+		opts = &redis.Options{
+			Addr:     redisAddress,
+			Password: cache.pword,
+			DB:       cache.db,
+		}
+	} else {
+		var err error
+		opts, err = redis.ParseURL(os.Getenv("REDIS_URL"))
+		if err != nil {
+			panic(err)
+		}
+	}
+	return redis.NewClient(opts)
 
-// add stack trace dependencies injection
+	//	return redis.NewClient(&redis.Options{
+	//		Addr:     cache.host,
+	//		DB:       cache.db,
+	//		Password: cache.pword,
+	//	})
+}
 
 func (cache *redisCache) Set(key string, value *[]models.Movie) {
 	client := cache.getClient()
