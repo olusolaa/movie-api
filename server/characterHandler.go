@@ -35,6 +35,10 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		log.Println("Getting characters for movie id: ", movieId)
+		log.Println("Sort by: ", len(sortParam))
+		log.Println("Filter by: ", len(filterParam))
+		log.Println("Order: ", len(orderParam))
 		links, err := swapi.GetAllCharactersByMovieId(movieId)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -79,15 +83,15 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 			}
 		}
 
-		if filterParam != "" {
-			filteredList := []models.Character{}
-			for _, character := range characters {
-				if character.Gender == filterParam {
-					filteredList = append(filteredList, character)
-				}
-			}
-			characters = filteredList
-		}
+		//if filterParam != "" {
+		//	filteredList := []models.Character{}
+		//	for _, character := range characters {
+		//		if character.Gender == filterParam {
+		//			filteredList = append(filteredList, character)
+		//		}
+		//	}
+		//	characters = filteredList
+		//}
 		heightTotal := float64(0)
 		for _, character := range characters {
 			height, err := strconv.ParseFloat(character.Height, 64)
