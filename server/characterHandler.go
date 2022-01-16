@@ -17,18 +17,18 @@ import (
 //to sort the results by name or height or gender, and the order parameter to order in assending or desending order
 // @Produce  json
 // @Param movie_id path int true "Movie ID"
-// @QueryParam sort_by query string false "Sort by field"
-// @QueryParam order query string false "Order"
-// @QueryParam filter_by query int false "Filter by field"
+// @Param sort_by path string false "Sort by field"
+// @Param order path string false "Order"
+// @Param filter_by path int false "Filter by field"
 // @Success 200 {object} []models.Character
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
-// @Router /api/v1/movies/:movie_id/characters [get]
+// @Router /api/v1/movies/{movie_id}/characters/{filter}/{sort_by}/{order} [get]
 func (s *Server) GetCharacters() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		sortParam := c.Query("sort_by")
-		filterParam := strings.Trim(c.Query("filter"), "\\s+")
-		orderParam := c.Query("order")
+		sortParam := c.Param("sort_by")
+		filterParam := strings.Trim(c.Param("filter"), "\\s+")
+		orderParam := c.Param("order")
 		movieId, err := strconv.Atoi(c.Param("movie_id"))
 		if err != nil {
 			log.Println(err)
