@@ -1,5 +1,42 @@
 basePath: /
 definitions:
+  models.ApiError:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  models.Character:
+    properties:
+      birth_year:
+        type: string
+      eye_color:
+        type: string
+      gender:
+        type: string
+      hair_color:
+        type: string
+      height:
+        type: string
+      mass:
+        type: string
+      name:
+        type: string
+      skin_color:
+        type: string
+    type: object
+  models.CharacterResponse:
+    properties:
+      message:
+        type: string
+      response:
+        items:
+          $ref: '#/definitions/models.Character'
+        type: array
+      status:
+        type: string
+    type: object
   models.Comment:
     properties:
       content:
@@ -20,6 +57,17 @@ definitions:
       user_ip:
         type: string
     type: object
+  models.CommentResponse:
+    properties:
+      message:
+        type: string
+      response:
+        items:
+          $ref: '#/definitions/models.Comment'
+        type: array
+      status:
+        type: string
+    type: object
   models.Movie:
     properties:
       comment_count:
@@ -33,9 +81,14 @@ definitions:
       title:
         type: string
     type: object
-  models.Response:
+  models.MovieResponse:
     properties:
-      TypeName: {}
+      message:
+        type: string
+      response:
+        items:
+          $ref: '#/definitions/models.Movie'
+        type: array
       status:
         type: string
     type: object
@@ -62,11 +115,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Movie'
-        "400":
-          description: Bad Request
+            $ref: '#/definitions/models.MovieResponse'
+        "404":
+          description: Not Found
           schema:
-            $ref: '#/definitions/models.Response'
+            $ref: '#/definitions/models.ApiError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ApiError'
       summary: Get all movies
   /api/v1/movies/{movie_id}/comments:
     get:
@@ -83,11 +140,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Comment'
-        "400":
-          description: Bad Request
+            $ref: '#/definitions/models.CommentResponse'
+        "404":
+          description: Not Found
           schema:
-            $ref: '#/definitions/models.Response'
+            $ref: '#/definitions/models.ApiError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ApiError'
       summary: Get comments
     post:
       consumes:
@@ -111,11 +172,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Comment'
-        "400":
-          description: Bad Request
+            $ref: '#/definitions/models.CommentResponse'
+        "404":
+          description: Not Found
           schema:
-            $ref: '#/definitions/models.Response'
+            $ref: '#/definitions/models.ApiError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ApiError'
       summary: Add comments
 securityDefinitions:
   BasicAuth:

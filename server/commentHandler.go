@@ -16,8 +16,9 @@ import (
 // @Produce  json
 // @Param comment body models.CommentRequest true "Comment"
 // @Param movie_id path int true "MovieId"
-// @Success 200 {object} models.Comment
-// @Failure 400 {object} models.Response
+// @Success 200 {object} models.CommentResponse
+// @Failure 404 {object} models.ApiError
+// @Failure 500 {object} models.ApiError
 // @Router /api/v1/movies/{movie_id}/comments [post]
 func (s *Server) AddComment() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -56,8 +57,9 @@ func (s *Server) AddComment() gin.HandlerFunc {
 // @Description Get all comments for a movie by movie id
 // @Produce  json
 // @Param movie_id path int true "Movie ID"
-// @Success 200 {object} models.Comment
-// @Failure 400 {object} models.Response
+// @Success 200 {object} models.CommentResponse
+// @Failure 404 {object} models.ApiError
+// @Failure 500 {object} models.ApiError
 // @Router /api/v1/movies/{movie_id}/comments [get]
 // GetComments returns all comments of a movie
 func (s *Server) GetComments() gin.HandlerFunc {

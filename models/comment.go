@@ -12,8 +12,3 @@ type Comment struct {
 	Content   string    `json:"content" pg:"content"`
 	CreatedAt time.Time `json:"created_at" pg:"created_at"`
 }
-
-type CommentRequest struct {
-	UserIPAdr string `json:"user_ip"`
-	Content   string `json:"content"`
-}

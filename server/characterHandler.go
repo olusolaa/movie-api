@@ -11,6 +11,19 @@ import (
 	"strings"
 )
 
+// @Summary Get characters
+// @Description Get all characters for a movie by movie id use the sort parameter
+//to sort the results by name or height or gender, and the order parameter to order in assending or desending order
+// @Produce  json
+// @Param movie_id path int true "Movie ID"
+// @QueryParam sort_by query string false "Sort by field"
+// @QueryParam order query string false "Order"
+// @QueryParam filter_by query int false "Filter by field"
+// @Success 200 {object} models.CharacterResponse
+// @Failure 404 {object} models.ApiError
+// @Failure 500 {object} models.ApiError
+// @Router /api/v1/movies/{movie_id}/comments [get]
+// GetComments returns all comments of a movie
 func (s *Server) GetCharacters() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sortParam := c.Query("sort_by")
