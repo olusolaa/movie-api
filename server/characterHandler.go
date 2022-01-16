@@ -27,7 +27,7 @@ import (
 func (s *Server) GetCharacters() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sortParam := c.Param("sort_by")
-		filterParam := strings.Trim(c.Param("filter"), " ")
+		filterParam := strings.TrimSpace(c.Param("filter"))
 		orderParam := c.Param("order")
 		movieId, err := strconv.Atoi(c.Param("movie_id"))
 		if err != nil {
@@ -36,9 +36,9 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 			return
 		}
 		log.Println("Getting characters for movie id: ", movieId)
-		log.Println("Sort by: ", len(sortParam))
-		log.Println("Filter by: ", len(filterParam))
-		log.Println("Order: ", len(orderParam))
+		log.Println("Sort by: ", sortParam)
+		log.Println("Filter by: ", filterParam)
+		log.Println("Order: ", orderParam)
 		links, err := swapi.GetAllCharactersByMovieId(movieId)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -83,15 +83,15 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 			}
 		}
 
-		//if filterParam != "" {
-		//	filteredList := []models.Character{}
-		//	for _, character := range characters {
-		//		if character.Gender == filterParam {
-		//			filteredList = append(filteredList, character)
-		//		}
-		//	}
-		//	characters = filteredList
-		//}
+		if filterParam != "" {
+			filteredList := []models.Character{}
+			for _, character := range characters {
+				if character.Gender == filterParam {
+					filteredList = append(filteredList, character)
+				}
+			}
+			characters = filteredList
+		}
 
 		heightTotal := float64(0)
 		for _, character := range characters {
@@ -104,7 +104,7 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 		}
 		ft := heightTotal / 34
 		inches := heightTotal / 24.53
-		heightString, _ := fmt.Printf("%.2fcm, %.2fft, %.2finches", heightTotal, ft, inches)
+		heightString := fmt.Sprintf("%.2fcm || %.2fft || %.2finches", heightTotal, ft, inches)
 
 		c.JSON(http.StatusOK, gin.H{"message": "user info retrieved successfully", "data": characters,
 			"metadata": gin.H{"matching_characters": len(characters), "total_height": heightString}})
