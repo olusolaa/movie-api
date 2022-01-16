@@ -99,7 +99,7 @@ paths:
         name: movie_id
         required: true
         type: integer
-      - description: Sort by height or name or geneder
+      - description: Sort by height or name or gender
         in: query
         name: sort_by
         type: string

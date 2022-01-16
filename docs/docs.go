@@ -77,7 +77,7 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "Sort by height or name or geneder",
+                        "description": "Sort by height or name or gender",
                         "name": "sort_by",
                         "in": "query"
                     },
