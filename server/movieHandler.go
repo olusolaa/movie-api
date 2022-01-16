@@ -11,7 +11,7 @@ import (
 // @Summary      Get all movies
 // @Description  Get all movies in order of their release date from earliest to newest in the cache or from swapi if the cache is empty
 // @Produce  json
-// @Success 200 {object} models.MovieResponse
+// @Success 200 {object} models.Movie
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
 // @Router /api/v1/movies [get]

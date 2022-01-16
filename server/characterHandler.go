@@ -15,11 +15,11 @@ import (
 // @Description Get all characters for a movie by movie id use the sort parameter
 //to sort the results by name or height or gender, and the order parameter to order in assending or desending order
 // @Produce  json
-// @Param movie_id path int true "Movie ID"
+// @Param movie_id path string true "Movie ID"
 // @QueryParam sort_by query string false "Sort by field"
 // @QueryParam order query string false "Order"
 // @QueryParam filter_by query int false "Filter by field"
-// @Success 200 {object} models.CharacterResponse
+// @Success 200 {object} []models.Character
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
 // @Router /api/v1/movies/:movie_id/characters [get]
