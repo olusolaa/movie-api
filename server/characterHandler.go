@@ -34,16 +34,19 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		links, err := swapi.GetAllCharactersByMovieId(movieId)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		characters := s.Cache.GetCharacters("movie_" + strconv.Itoa(movieId) + "_characters")
+		if characters == nil {
+			links, err := swapi.GetAllCharactersByMovieId(movieId)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
 
-		var characters []models.Character
-		for _, link := range *links {
-			info, _ := swapi.GetCharacterInfo(link)
-			characters = append(characters, *info)
+			for _, link := range *links {
+				info, _ := swapi.GetCharacterInfo(link)
+				characters = append(characters, *info)
+			}
+			s.Cache.SetCharacters("movie_"+strconv.Itoa(movieId)+"_characters", characters)
 		}
 
 		if orderParam == "descending" {

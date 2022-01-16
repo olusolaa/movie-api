@@ -46,12 +46,6 @@ func (cache *redisCache) getClient() *redis.Client {
 		}
 	}
 	return redis.NewClient(opts)
-
-	//	return redis.NewClient(&redis.Options{
-	//		Addr:     cache.host,
-	//		DB:       cache.db,
-	//		Password: cache.pword,
-	//	})
 }
 
 func (cache *redisCache) Set(key string, value *[]models.Movie) {
@@ -80,4 +74,33 @@ func (cache *redisCache) Get(key string) *[]models.Movie {
 	}
 	log.Println("Movies retrieved from cache")
 	return &movies
+}
+
+func (cache *redisCache) SetCharacters(key string, value []models.Character) {
+	client := cache.getClient()
+	marshal, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+	err = client.Set(ctx, key, string(marshal), cache.expires*time.Second).Err()
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Added characters to cache")
+	return
+}
+
+func (cache *redisCache) GetCharacters(key string) []models.Character {
+	client := cache.getClient()
+	val, err := client.Get(ctx, key).Result()
+	if err != nil {
+		return nil
+	}
+	var characters []models.Character
+	err = json.Unmarshal([]byte(val), &characters)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Characters retrieved from cache")
+	return characters
 }
