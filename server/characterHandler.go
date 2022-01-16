@@ -7,7 +7,6 @@ import (
 	"github.com/olusolaa/movieApi/swapi"
 	"log"
 	"net/http"
-	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -17,9 +16,9 @@ import (
 // @Description Get all characters for a movie by movie id use the sort parameter to sort the results by name or height or gender, and the order parameter to order in assending or desending order eg /api/v1/movies/{movie_id}/characters?sort_by=height&filter_by=male&order=descending
 // @Produce  json
 // @Param movie_id path int true "Movie ID"
-// @Param sort_by query string false "Sort by field"
-// @Param order query string false "Order"
-// @Param filter_by query string false "Filter by field"
+// @Param sort_by query string false "Sort by height or name or geneder"
+// @Param order query string false "ascending or descending order"
+// @Param filter_by query string false "Filter by male or female or n/a or hermaphrodite"
 // @Success 200 {object} []models.Character
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
@@ -55,7 +54,9 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 				})
 			case "height":
 				sort.Slice(characters, func(i, j int) bool {
-					return characters[i].Height > characters[j].Height
+					heightI, _ := strconv.ParseFloat(characters[i].Height, 64)
+					heightJ, _ := strconv.ParseFloat(characters[j].Height, 64)
+					return heightI > heightJ
 				})
 			case "gender":
 				sort.Slice(characters, func(i, j int) bool {
@@ -70,7 +71,9 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 				})
 			case "height":
 				sort.Slice(characters, func(i, j int) bool {
-					return characters[i].Height < characters[j].Height
+					heightI, _ := strconv.ParseFloat(characters[i].Height, 64)
+					heightJ, _ := strconv.ParseFloat(characters[j].Height, 64)
+					return heightI < heightJ
 				})
 			case "gender":
 				sort.Slice(characters, func(i, j int) bool {
@@ -78,8 +81,8 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 				})
 			}
 		}
-		r, _ := regexp.Compile("p([a-z]+)ch")
-		if r.MatchString(filterParam) {
+
+		if filterParam == "male" || filterParam == "female" || filterParam == "n/a" || filterParam == "hermaphrodite" {
 			filteredList := []models.Character{}
 			for _, character := range characters {
 				if character.Gender == filterParam {
