@@ -88,7 +88,7 @@ var doc = `{
                         "in": "path"
                     },
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Filter by field",
                         "name": "filter_by",
                         "in": "path"

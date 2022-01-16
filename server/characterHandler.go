@@ -19,7 +19,7 @@ import (
 // @Param movie_id path int true "Movie ID"
 // @Param sort_by path string false "Sort by field"
 // @Param order path string false "Order"
-// @Param filter_by path int false "Filter by field"
+// @Param filter_by path string false "Filter by field"
 // @Success 200 {object} []models.Character
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
@@ -27,7 +27,7 @@ import (
 func (s *Server) GetCharacters() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sortParam := c.Param("sort_by")
-		filterParam := strings.Trim(c.Param("filter"), "\\s+")
+		filterParam := strings.Trim(c.Param("filter"), " ")
 		orderParam := c.Param("order")
 		movieId, err := strconv.Atoi(c.Param("movie_id"))
 		if err != nil {

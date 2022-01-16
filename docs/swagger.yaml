@@ -108,7 +108,7 @@ paths:
       - description: Filter by field
         in: path
         name: filter_by
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
