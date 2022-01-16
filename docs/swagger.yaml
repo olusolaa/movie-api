@@ -92,7 +92,7 @@ definitions:
       status:
         type: string
     type: object
-host: localhost:8080
+host: https://swapi-movie-api.herokuapp.com/
 info:
   contact:
     email: support@swagger.io
@@ -125,6 +125,31 @@ paths:
           schema:
             $ref: '#/definitions/models.ApiError'
       summary: Get all movies
+  /api/v1/movies/:movie_id/characters:
+    get:
+      description: Get all characters for a movie by movie id use the sort parameter
+      parameters:
+      - description: Movie ID
+        in: path
+        name: movie_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CharacterResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ApiError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ApiError'
+      summary: Get characters
   /api/v1/movies/{movie_id}/comments:
     get:
       description: Get all comments for a movie by movie id

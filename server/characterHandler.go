@@ -22,8 +22,7 @@ import (
 // @Success 200 {object} models.CharacterResponse
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
-// @Router /api/v1/movies/{movie_id}/comments [get]
-// GetComments returns all comments of a movie
+// @Router /api/v1/movies/:movie_id/characters [get]
 func (s *Server) GetCharacters() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sortParam := c.Query("sort_by")

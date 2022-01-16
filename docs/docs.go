@@ -60,6 +60,44 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/movies/:movie_id/characters": {
+            "get": {
+                "description": "Get all characters for a movie by movie id use the sort parameter",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get characters",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Movie ID",
+                        "name": "movie_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.CharacterResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/movies/{movie_id}/comments": {
             "get": {
                 "description": "Get all comments for a movie by movie id",
@@ -310,7 +348,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
-	Host:        "localhost:8080",
+	Host:        "https://swapi-movie-api.herokuapp.com/",
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Go + Gin Movie API",
