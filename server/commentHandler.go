@@ -36,7 +36,7 @@ func (s *Server) AddComment() gin.HandlerFunc {
 		comment := &models.Comment{
 			MovieId:   movieID,
 			Content:   request.Content,
-			IP:        request.UserIPAdr,
+			IP:        c.ClientIP(),
 			CreatedAt: time.Now(),
 		}
 		data, err := s.DB.AddComment(comment)

@@ -28,7 +28,7 @@ func (s *Server) defineRoutes(router *gin.Engine) {
 	apiRouter.POST("/movies/:movie_id/comments", s.AddComment())
 	apiRouter.GET("/movies/:movie_id/comments", s.GetComments())
 	apiRouter.GET("/movies", s.GetMovies())
-	apiRouter.GET("/movies/:movie_id/characters", s.GetCharacters())
+	apiRouter.GET("/movies/:movie_id/characters/:filter/:sort_by/:order", s.GetCharacters())
 
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
