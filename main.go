@@ -18,7 +18,7 @@ import (
 // @license.name  MIT
 // @license.url   https://opensource.org/licenses/MIT
 
-// @host      swapi-movie-api.herokuapp.com/
+// @host      swapi-movie-api.herokuapp.com
 // @BasePath  /
 // @securityDefinitions.basic  BasicAuth
 func main() {
