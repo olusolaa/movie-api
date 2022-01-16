@@ -91,12 +91,26 @@ paths:
   /api/v1/movies/{movie_id}/characters:
     get:
       description: Get all characters for a movie by movie id use the sort parameter
+        to sort the results by name or height or gender, and the order parameter to
+        order in assending or desending order eg /api/v1/movies/{movie_id}/characters?sort_by=height&filter_by=male&order=descending
       parameters:
       - description: Movie ID
-        in: query
+        in: path
         name: movie_id
         required: true
         type: integer
+      - description: Sort by field
+        in: query
+        name: sort_by
+        type: string
+      - description: Order
+        in: query
+        name: order
+        type: string
+      - description: Filter by field
+        in: query
+        name: filter_by
+        type: string
       produces:
       - application/json
       responses:

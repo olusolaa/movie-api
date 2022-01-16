@@ -48,7 +48,7 @@
         },
         "/api/v1/movies/{movie_id}/characters": {
             "get": {
-                "description": "Get all characters for a movie by movie id use the sort parameter",
+                "description": "Get all characters for a movie by movie id use the sort parameter to sort the results by name or height or gender, and the order parameter to order in assending or desending order eg /api/v1/movies/{movie_id}/characters?sort_by=height\u0026filter_by=male\u0026order=descending",
                 "produces": [
                     "application/json"
                 ],
@@ -58,8 +58,26 @@
                         "type": "integer",
                         "description": "Movie ID",
                         "name": "movie_id",
-                        "in": "query",
+                        "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field",
+                        "name": "sort_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by field",
+                        "name": "filter_by",
+                        "in": "query"
                     }
                 ],
                 "responses": {
