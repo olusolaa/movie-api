@@ -15,7 +15,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param comment body models.CommentRequest true "Comment"
-// @Param movie_id path string true "MovieId"
+// @Param movie_id path int true "MovieId"
 // @Success 200 {object} models.Comment
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
@@ -56,7 +56,7 @@ func (s *Server) AddComment() gin.HandlerFunc {
 // @Summary Get comments
 // @Description Get all comments for a movie by movie id
 // @Produce  json
-// @Param movie_id path string true "Movie ID"
+// @Param movie_id path int true "Movie ID"
 // @Success 200 {object} models.Comment
 // @Failure 404 {object} models.ApiError
 // @Failure 500 {object} models.ApiError
@@ -65,12 +65,13 @@ func (s *Server) AddComment() gin.HandlerFunc {
 func (s *Server) GetComments() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		movieId, err := strconv.Atoi(c.Param("movie_id"))
-		data, err := s.DB.GetComments(movieId)
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		data, err := s.DB.GetComments(movieId)
+
 		for i := 0; i < len(*data)/2; i++ {
 			(*data)[i], (*data)[len(*data)-1-i] = (*data)[len(*data)-1-i], (*data)[i]
 		}

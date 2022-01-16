@@ -69,7 +69,7 @@ var doc = `{
                 "summary": "Get characters",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "Movie ID",
                         "name": "movie_id",
                         "in": "path",
@@ -110,7 +110,7 @@ var doc = `{
                 "summary": "Get comments",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "Movie ID",
                         "name": "movie_id",
                         "in": "path",
@@ -158,7 +158,7 @@ var doc = `{
                         }
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "MovieId",
                         "name": "movie_id",
                         "in": "path",
