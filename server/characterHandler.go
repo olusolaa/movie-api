@@ -92,6 +92,7 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 		//	}
 		//	characters = filteredList
 		//}
+
 		heightTotal := float64(0)
 		for _, character := range characters {
 			height, err := strconv.ParseFloat(character.Height, 64)
@@ -103,7 +104,7 @@ func (s *Server) GetCharacters() gin.HandlerFunc {
 		}
 		ft := heightTotal / 34
 		inches := heightTotal / 24.53
-		heightString, _ := fmt.Printf("%.2fcm | %2fft | %2finches", heightTotal, ft, inches)
+		heightString, _ := fmt.Printf("%.2fcm, %.2fft, %.2finches", heightTotal, ft, inches)
 
 		c.JSON(http.StatusOK, gin.H{"message": "user info retrieved successfully", "data": characters,
 			"metadata": gin.H{"matching_characters": len(characters), "total_height": heightString}})
