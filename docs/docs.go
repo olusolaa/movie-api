@@ -60,7 +60,7 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/movies/{movie_id}/characters/{filter}/{sort_by}/{order}": {
+        "/api/v1/movies/{movie_id}/characters": {
             "get": {
                 "description": "Get all characters for a movie by movie id use the sort parameter",
                 "produces": [
@@ -72,26 +72,8 @@ var doc = `{
                         "type": "integer",
                         "description": "Movie ID",
                         "name": "movie_id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Sort by field",
-                        "name": "sort_by",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Order",
-                        "name": "order",
-                        "in": "path"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter by field",
-                        "name": "filter_by",
-                        "in": "path"
                     }
                 ],
                 "responses": {

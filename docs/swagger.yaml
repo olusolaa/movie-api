@@ -88,27 +88,15 @@ paths:
           schema:
             $ref: '#/definitions/models.ApiError'
       summary: Get all movies
-  /api/v1/movies/{movie_id}/characters/{filter}/{sort_by}/{order}:
+  /api/v1/movies/{movie_id}/characters:
     get:
       description: Get all characters for a movie by movie id use the sort parameter
       parameters:
       - description: Movie ID
-        in: path
+        in: query
         name: movie_id
         required: true
         type: integer
-      - description: Sort by field
-        in: path
-        name: sort_by
-        type: string
-      - description: Order
-        in: path
-        name: order
-        type: string
-      - description: Filter by field
-        in: path
-        name: filter_by
-        type: string
       produces:
       - application/json
       responses:
