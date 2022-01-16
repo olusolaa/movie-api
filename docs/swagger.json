@@ -14,7 +14,7 @@
         },
         "version": "1.0"
     },
-    "host": "https://swapi-movie-api.herokuapp.com/",
+    "host": "swapi-movie-api.herokuapp.com/",
     "basePath": "/",
     "paths": {
         "/api/v1/movies": {

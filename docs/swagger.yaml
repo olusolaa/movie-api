@@ -92,7 +92,7 @@ definitions:
       status:
         type: string
     type: object
-host: https://swapi-movie-api.herokuapp.com/
+host: swapi-movie-api.herokuapp.com/
 info:
   contact:
     email: support@swagger.io
