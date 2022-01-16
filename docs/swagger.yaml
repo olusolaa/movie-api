@@ -4,8 +4,6 @@ definitions:
     properties:
       message:
         type: string
-      status:
-        type: string
     type: object
   models.Character:
     properties:
@@ -24,17 +22,6 @@ definitions:
       name:
         type: string
       skin_color:
-        type: string
-    type: object
-  models.CharacterResponse:
-    properties:
-      message:
-        type: string
-      response:
-        items:
-          $ref: '#/definitions/models.Character'
-        type: array
-      status:
         type: string
     type: object
   models.Comment:
@@ -57,17 +44,6 @@ definitions:
       user_ip:
         type: string
     type: object
-  models.CommentResponse:
-    properties:
-      message:
-        type: string
-      response:
-        items:
-          $ref: '#/definitions/models.Comment'
-        type: array
-      status:
-        type: string
-    type: object
   models.Movie:
     properties:
       comment_count:
@@ -79,17 +55,6 @@ definitions:
       release_date:
         type: string
       title:
-        type: string
-    type: object
-  models.MovieResponse:
-    properties:
-      message:
-        type: string
-      response:
-        items:
-          $ref: '#/definitions/models.Movie'
-        type: array
-      status:
         type: string
     type: object
 host: swapi-movie-api.herokuapp.com
@@ -115,7 +80,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.MovieResponse'
+            $ref: '#/definitions/models.Movie'
         "404":
           description: Not Found
           schema:
@@ -133,14 +98,16 @@ paths:
         in: path
         name: movie_id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.CharacterResponse'
+            items:
+              $ref: '#/definitions/models.Character'
+            type: array
         "404":
           description: Not Found
           schema:
@@ -158,14 +125,14 @@ paths:
         in: path
         name: movie_id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.CommentResponse'
+            $ref: '#/definitions/models.Comment'
         "404":
           description: Not Found
           schema:
@@ -190,14 +157,14 @@ paths:
         in: path
         name: movie_id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.CommentResponse'
+            $ref: '#/definitions/models.Comment'
         "404":
           description: Not Found
           schema:

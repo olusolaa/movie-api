@@ -42,7 +42,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.MovieResponse"
+                            "$ref": "#/definitions/models.Movie"
                         }
                     },
                     "404": {
@@ -69,7 +69,7 @@ var doc = `{
                 "summary": "Get characters",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Movie ID",
                         "name": "movie_id",
                         "in": "path",
@@ -80,7 +80,10 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.CharacterResponse"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Character"
+                            }
                         }
                     },
                     "404": {
@@ -107,7 +110,7 @@ var doc = `{
                 "summary": "Get comments",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Movie ID",
                         "name": "movie_id",
                         "in": "path",
@@ -118,7 +121,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.CommentResponse"
+                            "$ref": "#/definitions/models.Comment"
                         }
                     },
                     "404": {
@@ -155,7 +158,7 @@ var doc = `{
                         }
                     },
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "MovieId",
                         "name": "movie_id",
                         "in": "path",
@@ -166,7 +169,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.CommentResponse"
+                            "$ref": "#/definitions/models.Comment"
                         }
                     },
                     "404": {
@@ -190,9 +193,6 @@ var doc = `{
             "type": "object",
             "properties": {
                 "message": {
-                    "type": "string"
-                },
-                "status": {
                     "type": "string"
                 }
             }
@@ -222,23 +222,6 @@ var doc = `{
                     "type": "string"
                 },
                 "skin_color": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.CharacterResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "response": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Character"
-                    }
-                },
-                "status": {
                     "type": "string"
                 }
             }
@@ -274,23 +257,6 @@ var doc = `{
                 }
             }
         },
-        "models.CommentResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "response": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Comment"
-                    }
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
         "models.Movie": {
             "type": "object",
             "properties": {
@@ -307,23 +273,6 @@ var doc = `{
                     "type": "string"
                 },
                 "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.MovieResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "response": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Movie"
-                    }
-                },
-                "status": {
                     "type": "string"
                 }
             }
