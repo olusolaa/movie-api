@@ -97,6 +97,18 @@ paths:
         name: movie_id
         required: true
         type: integer
+      - description: Sort by field
+        in: path
+        name: sort_by
+        type: string
+      - description: Order
+        in: path
+        name: order
+        type: string
+      - description: Filter by field
+        in: path
+        name: filter_by
+        type: integer
       produces:
       - application/json
       responses:

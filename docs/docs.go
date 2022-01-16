@@ -74,6 +74,24 @@ var doc = `{
                         "name": "movie_id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field",
+                        "name": "sort_by",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order",
+                        "name": "order",
+                        "in": "path"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Filter by field",
+                        "name": "filter_by",
+                        "in": "path"
                     }
                 ],
                 "responses": {
