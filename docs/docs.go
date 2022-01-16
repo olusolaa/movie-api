@@ -60,7 +60,7 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/movies/:movie_id/characters": {
+        "/api/v1/movies/{movie_id}/characters/{filter}/{sort_by}/{order}": {
             "get": {
                 "description": "Get all characters for a movie by movie id use the sort parameter",
                 "produces": [
@@ -250,9 +250,6 @@ var doc = `{
             "type": "object",
             "properties": {
                 "content": {
-                    "type": "string"
-                },
-                "user_ip": {
                     "type": "string"
                 }
             }
