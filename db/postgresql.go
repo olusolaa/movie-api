@@ -27,7 +27,7 @@ func (psql *PostgresDB) CountComments(id int) (int64, error) {
 func (psql *PostgresDB) Init() {
 	psqlInfo := os.Getenv("DATABASE_URL")
 	if psqlInfo == "" {
-		psqlInfo = "postgres://postgres:postgres@localhost:5432/movieApi?sslmode=disable"
+		psqlInfo = "postgres://root:password@db:5432/movie-api?sslmode=disable"
 	}
 	DBSession, err := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{})
 	if err != nil {
